@@ -13,10 +13,10 @@ select id into cart_id1 from cart where c_id = customer_id;
         SET cart_id1 = LAST_INSERT_ID();
     end if;
 
-	SELECT COUNT(*) INTO is_product_present FROM cart_items WHERE product_id = product_id1 AND cart_id =  cart_id1;
+	select COUNT(*) into is_product_present from cart_items where product_id = product_id1 and cart_id =  cart_id1;
 
-	IF is_product_present = 1 THEN
-        UPDATE cart_items SET quantity = quantity + product_quantity WHERE cart_id = cart_id1 and product_id = product_id1;
+	if is_product_present = 1 then
+        update cart_items set quantity = quantity + product_quantity where cart_id = cart_id1 and product_id = product_id1;
     ELSE
 	BEGIN 
     insert into cart_items (cart_id, product_id,quantity) values (cart_id1, product_id1,product_quantity);
