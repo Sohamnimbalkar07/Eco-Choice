@@ -1,0 +1,161 @@
+body {
+    .specific-page {
+        background-image: url(https://u-static.fotor.com/images/text-to-image/result/PRO-7a3fb109ce8f4cb282331812ccaaf4f0.jpg);
+    }
+}
+
+h2 {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 30px;
+    font-size: 35px;
+    text-shadow: 7px 7px 7px rgba(0, 0, 0, 0.692);
+    color: black;
+}
+
+h2:hover {
+    text-shadow: 8px 8px 8px rgba(0, 0, 0, 0.828);
+
+}
+
+.container1 {
+    background-color: rgba(240, 248, 255, 0.578);
+    margin-top: 2%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5%;
+    text-align: center;
+    box-shadow: 5px 5px 10px rgb(79, 79, 79);
+    z-index: -2;
+    backdrop-filter: blur(10px);
+    z-index: 3;
+    width: 40%;
+    /* border-radius: 10px; */
+}
+
+#email {
+    margin-bottom: 10px;
+    height: 30px;
+    width: 80%;
+    border-radius: 10px;
+    border: none;
+    padding-left: 3%;
+}
+
+#lastName {
+    margin-bottom: 10px;
+    height: 30px;
+    width: 80%;
+    border-radius: 10px;
+    border: none;
+    padding-left: 3%;
+}
+
+#firstName {
+    margin-bottom: 10px;
+    height: 30px;
+    width: 80%;
+    border-radius: 10px;
+    border: none;
+    padding-left: 3%;
+}
+
+#password {
+    margin-bottom: 10px;
+    height: 30px;
+    width: 80%;
+    border-radius: 10px;
+    border: none;
+    padding-left: 3%;
+}
+#confirmPassword {
+    margin-bottom: 10px;
+    height: 30px;
+    width: 80%;
+    border-radius: 10px;
+    border: none;
+    padding-left: 3%;
+}
+
+#username {
+    margin-bottom: 10px;
+    height: 30px;
+    width: 80%;
+    border-radius: 10px;
+    border: none;
+    padding-left: 3%;
+}
+
+#mobileNo {
+    margin-bottom: 10px;
+    height: 30px;
+    width: 80%;
+    border-radius: 10px;
+    border: none;
+    padding-left: 3%;
+}
+
+#Address {
+    margin-bottom: 10px;
+    height: 30px;
+    width: 80%;
+    border-radius: 10px;
+    border: none;
+    padding-left: 3%;
+}
+
+#email:hover {
+    background-color: rgb(255, 245, 234);
+}
+
+#lastName:hover {
+    background-color: rgb(255, 245, 234);
+}
+
+#firstName:hover {
+    background-color: rgb(255, 245, 234);
+}
+
+#password:hover {
+    background-color: rgb(255, 245, 234);
+}
+
+#confirmPassword:hover {
+    background-color: rgb(255, 245, 234);
+}
+#username:hover {
+    background-color: rgb(255, 245, 234);
+}
+
+#mobileNo:hover {
+    background-color: rgb(255, 245, 234);
+}
+
+#Address:hover {
+    background-color: rgb(255, 245, 234);
+}
+
+.btn1 {
+    width: 25%;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(89, 166, 255);
+    color: white;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.btn1:hover {
+    background-color: rgb(119, 119, 255);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.354);
+}
+
+#role {
+    border: none;
+    border-radius: 100%;
+    height: 50px;
+    background-color: rgba(250, 235, 216, 0.555);
+}
+
+#role:hover {
+    background-color: rgba(240, 248, 255, 0.812);
+}

@@ -1,0 +1,8 @@
+.table-striped {
+    background-color: rgba(240, 248, 255, 0.795);
+    border-radius: 20px;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    font-weight: 700;
+  }

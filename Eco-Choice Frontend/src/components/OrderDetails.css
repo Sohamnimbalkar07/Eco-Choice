@@ -1,0 +1,33 @@
+.order-card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-name {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .product-desc {
+    color: #666;
+    font-size: 14px;
+  }
+  
+  .table-borderless th,
+  .table-borderless td {
+    border: none;
+  }
+  
+  tfoot td {
+    border-top: none;
+  }
+  
+  tfoot td strong {
+    color: #ff9f00;
+  }
+  
+  .text-end {
+    text-align: end;
+  }
+  

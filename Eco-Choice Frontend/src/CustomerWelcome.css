@@ -1,0 +1,29 @@
+/* CustomerWelcome.css */
+
+.welcome-container {
+    margin-top: 40px;
+  }
+  
+  .product-card {
+    border: 1px solid #ddd;
+    padding: 6px;
+  }
+  
+  .product-card h5 {
+    font-size: 1.25rem;
+  }
+  
+  .product-card p {
+    margin-bottom: 10px;
+  }
+  
+  .product-card .btn-purchase {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .product-card .btn-add-to-cart {
+    background-color: #28a745;
+    color: white;
+  }
+  
