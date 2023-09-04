@@ -1,8 +1,6 @@
 DELIMITER $
 
-CREATE TRIGGER UpdateTotalUnits
-AFTER INSERT ON order_item
-FOR EACH ROW
+CREATE TRIGGER UpdateTotalUnits AFTER INSERT ON order_item FOR EACH ROW
 BEGIN
     
     UPDATE product
