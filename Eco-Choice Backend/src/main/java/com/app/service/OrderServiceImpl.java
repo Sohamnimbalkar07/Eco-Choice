@@ -9,24 +9,23 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.app.dao.Cart_ItemsRepository;
-import com.app.dao.CustomerRepository;
-import com.app.dao.OrderItemRepository;
-import com.app.dao.OrderRepository;
-import com.app.dao.ProductRepository;
+import com.app.repository.Cart_ItemsRepository;
+import com.app.repository.OrderItemRepository;
+import com.app.repository.OrderRepository;
+import com.app.repository.ProductRepository;
+import com.app.repository.UserRepository;
 import com.app.dto.SingleOrder;
-import com.app.pojos.Cart_Items;
-import com.app.pojos.Customer;
-import com.app.pojos.Order;
-import com.app.pojos.OrderItem;
-import com.app.pojos.Product;
+import com.app.entities.Cart_Items;
+import com.app.entities.Order;
+import com.app.entities.OrderItem;
+import com.app.entities.Product;
+import com.app.entities.UserEntity;
 
 @Service
 public class OrderServiceImpl implements IOrderService {
-
-	    
+	
 	    @Autowired
-	    private CustomerRepository customerRepo;
+	    private UserRepository userRepo;
 
 	    @Autowired
 	    private OrderRepository orderRepo;
@@ -42,87 +41,82 @@ public class OrderServiceImpl implements IOrderService {
 
 		@Override
 	    public void placeSingleProductOrder(SingleOrder order) {
-	        // Retrieve the customer
-	        Customer customer = customerRepo.findById(order.getCustomerId())
-	        .orElseThrow(() -> new RuntimeException("Customer not found with ID"));
 	        
-	        Product product = productRepo.findById(order.getProduct_id());
-	        //.orElseThrow(() -> new RuntimeException("product not found with ID"));
+	        UserEntity user = userRepo.findByUserId(order.getUserId())
+	        .orElseThrow(() -> new RuntimeException("User not found with ID"));
+	        
+	        Product product = productRepo.findById(order.getProduct_id())
+	        .orElseThrow(() -> new RuntimeException("product not found with ID"));
 
-	        // Create a new order
+	        
 	        Order order1 = new Order();
-	        order1.setCustomer(customer);
+	        order1.setUser(user);
 	        order1.setShippingAddress(order.getShippingAddress());
 	        order1.setTotal(order.getTotal());
             order1.setDate(LocalDate.now());
-	        // Create an order item for the single product
+	        
 	        OrderItem orderItem = new OrderItem();
 	        orderItem.setOrder(order1);
 	        orderItem.setProduct(product);
 	        orderItem.setQuantity(order.getQuantity());
 	        orderItem.setTotal(order.getTotal());
-	        // Calculate and set the total based on product price and quantity
-	        // orderItem.setTotal(...);
-
-	        // Save order and order item
+	        
 	        order1.setOrderItems(Collections.singletonList(orderItem));
 	        Order savedOrder = orderRepo.save(order1);
 	        orderItemRepo.save(orderItem);
 
-	        //return savedOrder
 	    }
 
 		@Override
-		public String placeOrderFromCart(int customerId, String shippingAddress,int total) {
+		public String placeOrderFromCart(long userId, String shippingAddress,int total) {
 			
-			// Retrieve the customer
-	        Customer customer = customerRepo.findById(customerId)
-	                .orElseThrow(() -> new RuntimeException("Customer not found with ID: " + customerId));
+			UserEntity user = userRepo.findByUserId(userId)
+			        .orElseThrow(() -> new RuntimeException("User not found with ID"));
 
-	        // Create a new order
+	        
 	        Order order = new Order();
-	        order.setCustomer(customer);
+	        order.setUser(user);
 	        order.setShippingAddress(shippingAddress);
 	        order.setTotal(total);
             order.setDate(LocalDate.now());
-	        // Retrieve cart items for the customer
-	        List<Cart_Items> cartItems = cart_ItemsRepo.findAllByCartCustomerId(customerId);
+	        
+	        List<Cart_Items> cartItems = cart_ItemsRepo.findAllByCartUserUserId(userId);
 
 //	        if (cartItems.isEmpty()) {
 //	            return "Cart is empty";
 //	        }
 
-	        // Create order items from cart items
+	        
 	        List<OrderItem> orderItems = new ArrayList<>();
 
-	        for (Cart_Items cartItem : cartItems) {
+	        for (Cart_Items cartItem : cartItems) 
+	        {
 	            OrderItem orderItem = new OrderItem();
 	            orderItem.setOrder(order);
 	            orderItem.setProduct(cartItem.getProduct());
 	            orderItem.setQuantity(cartItem.getQuantity());
 	            orderItem.setTotal(cartItem.getTotalPrice());
-	            // Calculate and set the total based on product price and quantity
-	            // orderItem.setTotal(...);
-
-	            orderItems.add(orderItem);
+	            
+                orderItems.add(orderItem);
 	        }
 
-	        // Save order and order items
+	        
 	        order.setOrderItems(orderItems);
 	        Order savedOrder = orderRepo.save(order);
 	        orderItemRepo.saveAll(orderItems);
 
-	        // Clear the customer's cart after placing the order
-	       cart_ItemsRepo.deleteByCartCustomerId(customerId);
+	        
+	       cart_ItemsRepo.deleteByCartUserUserId(userId);
 
-	        //return savedOrder;
 			return "1";
 		}
 		
-		public List<Order> getOrdersByCustomerId(int customerId) {
-	        return orderRepo.findByCustomerId(customerId);
+		public List<Order> getOrdersByCustomerId(long customerId) 
+		{
+	        return orderRepo.findByUserUserId(customerId);
 	    }
-	}
+
+}
 
 	
 

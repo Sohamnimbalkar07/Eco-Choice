@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.app.dto.ErrorResponse;
 import com.app.dto.ProductDTO;
 import com.app.dto.ResponseDTO;
-import com.app.pojos.Product;
+import com.app.entities.Product;
 import com.app.service.IFarmerService;
 
 
@@ -39,19 +39,18 @@ public class FarmerController {
 	IFarmerService FarmerService;
 	
 	
-	
-	@GetMapping("/{farmer_id}")
-	public ResponseEntity<?> getproduct(@PathVariable int farmer_id)
+	@GetMapping("/{user_id}")
+	public ResponseEntity<?> getproduct(@PathVariable long user_id)
 	{
 		System.out.println("in get all product details get product");
 		//invoke service method to get details
 		try {
 			
-			return ResponseEntity.ok(FarmerService.getProduct(farmer_id));
+			return ResponseEntity.ok(FarmerService.getProduct(user_id));
 			} catch(RuntimeException e)
 			{
 				System.out.println("err in get" + e);
-				return new ResponseEntity<>(new ErrorResponse("unable to get products",e.getMessage()),HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<>(new ErrorResponse("unable to get products"),HttpStatus.BAD_REQUEST);
 			}
 	}
 	
@@ -69,7 +68,7 @@ public class FarmerController {
 		catch(RuntimeException e)
 		{
 			System.out.println("err in get" + e);
-			return new ResponseEntity<>(new ErrorResponse("Product not added, please try again",e.getMessage()),HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new ErrorResponse("Product not added, please try again"),HttpStatus.BAD_REQUEST);
 		}
 		
 	}
@@ -81,6 +80,7 @@ public class FarmerController {
 		boolean flag = true;
 		try
 		{
+			System.out.println("in upload method");
 			flag = FarmerService.upload(pid, file.getBytes());
 		}
 		catch(Exception e)
@@ -110,10 +110,11 @@ public class FarmerController {
 			} catch(RuntimeException e)
 			{
 				System.out.println("err in get" + e);
-				return new ResponseEntity<>(new ErrorResponse("Fetching USer details failed ",e.getMessage()),HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<>(new ErrorResponse("Fetching USer details failed "),HttpStatus.BAD_REQUEST);
 			}
 	}
-    //add REST API to update existing user details
+    
+	//add REST API to update existing user details
 	@PutMapping
 	public ResponseEntity<?> updateProductDetails(@RequestBody ProductDTO productdto)
 	{
@@ -126,14 +127,15 @@ public class FarmerController {
 		catch(RuntimeException e)
 		{
 			System.out.println("err in get" + e);
-			return new ResponseEntity<>(new ErrorResponse("updating USer details failed ",e.getMessage()),HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new ErrorResponse("updating USer details failed "),HttpStatus.BAD_REQUEST);
 		}
-		
-	}
+	 }
+	
 	@GetMapping("/getcategory")
 	public ResponseEntity<?> getCategories()
 	{
 		System.out.println("in get category");
 	    return ResponseEntity.ok(FarmerService.getCategories()); 
 	}
+	
 }

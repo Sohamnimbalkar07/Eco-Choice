@@ -6,13 +6,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.app.dao.CategoryRepository;
-import com.app.dao.FarmerRepository;
-import com.app.dao.ProductRepository;
+import com.app.repository.CategoryRepository;
+import com.app.repository.ProductRepository;
+import com.app.repository.UserRepository;
 import com.app.dto.ProductDTO;
-import com.app.pojos.Category;
-import com.app.pojos.Farmer;
-import com.app.pojos.Product;
+import com.app.entities.Category;
+import com.app.entities.UserEntity;
+import com.app.entities.Product;
 
 @Service
 public class FarmerServiceImpl implements IFarmerService {
@@ -21,7 +21,7 @@ public class FarmerServiceImpl implements IFarmerService {
 	private ProductRepository productRepo;
 	
 	@Autowired
-	private FarmerRepository farmerRepo;
+	private UserRepository userRepo;
 	
 	@Autowired
 	private CategoryRepository categoryRepo;
@@ -31,7 +31,7 @@ public class FarmerServiceImpl implements IFarmerService {
 		
 
 		Product product = new Product(productdto.getProductName(),productdto.getDescription(),productdto.getPricePerUnit(),
-				productdto.getTotalUnits(),categoryRepo.findById(productdto.getCategoryId()).get(),farmerRepo.findById(productdto.getFarmerId()).get());
+				productdto.getTotalUnits(),categoryRepo.findById(productdto.getCategoryId()).get(),userRepo.findByUserId(productdto.getUserId()).get());
 		return productRepo.save(product) ;
 	}
 
@@ -41,16 +41,16 @@ public class FarmerServiceImpl implements IFarmerService {
 		productRepo.deleteById(productId);
 		return "product deleted successfully";
 	}
-
+//
 	@Override
-	public List<Product> getProduct(int farmer_id) {
+	public List<Product> getProduct(long user_id) {
 		
 		
-		return productRepo.findAllByFarmerId(farmer_id);
+		return productRepo.findAllByUserUserId(user_id);
 	}
 
 	@Override
-	public Product getProductDetails(int Id)
+	public Optional<Product> getProductDetails(int Id)
 	{   
 		System.out.println(productRepo.findById(Id));
 		return productRepo.findById(Id);
@@ -61,20 +61,20 @@ public class FarmerServiceImpl implements IFarmerService {
 	public String updateProductDetails(ProductDTO productdto) {
 		
 		Product product = new Product(productdto.getId(),productdto.getProductName(),productdto.getDescription(),productdto.getPricePerUnit(),
-				productdto.getTotalUnits(),categoryRepo.findById(productdto.getCategoryId()).get(),farmerRepo.findById(productdto.getFarmerId()).get());
+				productdto.getTotalUnits(),categoryRepo.findById(productdto.getCategoryId()).get(),userRepo.findByUserId(productdto.getUserId()).get());
 		productRepo.save(product);
 		return "Product Updated Sucessfully";
 	}
 
 	@Override
 	public boolean upload(int pid, byte[] photo) {
-		
+		System.out.println("in upload service method");
 		if(productRepo.uploadPhoto(pid, photo) == 1)
              return true;
         else
 		     return false;
 	}
-
+//
 	@Override
 	public List<Category> getCategories() {
 		

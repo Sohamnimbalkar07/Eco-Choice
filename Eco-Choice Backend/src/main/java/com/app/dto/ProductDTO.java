@@ -25,6 +25,6 @@ public class ProductDTO {
 	
 	int categoryId;
 	
-	int farmerId;
+    long userId;
 	
 }

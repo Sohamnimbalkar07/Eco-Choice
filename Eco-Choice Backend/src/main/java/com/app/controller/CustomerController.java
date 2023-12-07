@@ -20,9 +20,9 @@ import com.app.dto.ErrorResponse;
 import com.app.dto.OrderDetails;
 import com.app.dto.ResponseDTO;
 import com.app.dto.SingleOrder;
-import com.app.pojos.Order;
-import com.app.pojos.OrderItem;
-import com.app.pojos.Product;
+import com.app.entities.Order;
+import com.app.entities.OrderItem;
+import com.app.entities.Product;
 import com.app.service.CustomerServiceImpl;
 import com.app.service.ICustomerService;
 import com.app.service.IOrderService;
@@ -43,7 +43,7 @@ public class CustomerController {
 		System.out.println("in Customer controller");
 	}
 	
-	@GetMapping("getproducts/{productname}")
+	@GetMapping("/getproducts/{productname}")
 	public ResponseEntity<?> getProductByName(@PathVariable String productname){
 		
 		try {
@@ -51,7 +51,7 @@ public class CustomerController {
 		}catch(RuntimeException e)
 		{
 			System.out.println("err in addToCart" + e);
-			return new ResponseEntity<>(new ErrorResponse("Product Not Found",e.getMessage()),HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new ErrorResponse("Product Not Found"),HttpStatus.BAD_REQUEST);
 		}
 		
 		}
@@ -62,27 +62,27 @@ public class CustomerController {
 		System.out.println(cartdto);
 		try {
 			System.out.println(cartdto);
-		customerService.addToCart(cartdto.getCustomer_id(), cartdto.getProduct_id(), cartdto.getQuantity());
+		customerService.addToCart(cartdto.getUser_id(), cartdto.getProduct_id(), cartdto.getQuantity());
 		
 		return new ResponseEntity<>(new ResponseDTO("product is added in cart Successfully"),HttpStatus.CREATED);
 		}catch(RuntimeException e)
 		{
 			System.out.println("err in addToCart" + e);
-			return new ResponseEntity<>(new ErrorResponse("adding User failed",e.getMessage()),HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new ErrorResponse("adding User failed"),HttpStatus.BAD_REQUEST);
 		}
 	}
 	
-	@GetMapping("/{customer_id}")
-	public ResponseEntity<?> getCartItems(@PathVariable int customer_id){
+	@GetMapping("/{user_id}")
+	public ResponseEntity<?> getCartItems(@PathVariable long user_id){
 		
-		System.out.println(customer_id);
+		System.out.println(user_id);
 		try {
 			
-			return ResponseEntity.ok(customerService.getCartItems(customer_id));
+			return ResponseEntity.ok(customerService.getCartItems(user_id));
 			
 		}catch(RuntimeException e)
 		{
-			return new ResponseEntity<>(new ErrorResponse("No items in Cart",e.getMessage()),HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new ErrorResponse("No items in Cart"),HttpStatus.BAD_REQUEST);
 		}
 	}
 	
@@ -91,14 +91,14 @@ public class CustomerController {
 			
 		return new ResponseEntity<List<Product>>(customerService.getAllProduct(),HttpStatus.OK);
 		
-		}
+	}
 	
 	@DeleteMapping("/{cartItemId}")
 	public ResponseEntity<?> RemoveCart(@PathVariable int cartItemId)
 	{
 		System.out.println("in remove cart"+cartItemId);
 		customerService.removeCart(cartItemId);
-		return ResponseEntity.ok(new ResponseDTO("Item removed Successfully"));
+		return ResponseEntity.ok(new ResponseDTO("CartItem removed Successfully"));
 	}
 	
 	@PostMapping("/order")
@@ -112,12 +112,12 @@ public class CustomerController {
 	@PostMapping("/orderfromcart")
 	public ResponseEntity<?> placeOrderFromCart(@RequestBody OrderDetails orderdetails)
 	{
-		return new ResponseEntity<>(orderService.placeOrderFromCart(orderdetails.getCustomerid(), orderdetails.getAddress(),orderdetails.getTotal()),HttpStatus.CREATED);
+		return new ResponseEntity<>(orderService.placeOrderFromCart(orderdetails.getUserid(), orderdetails.getAddress(),orderdetails.getTotal()),HttpStatus.CREATED);
 	}
 	
-	@GetMapping("/order/{customerId}")
-    public ResponseEntity<?> getOrdersByCustomerId(@PathVariable int customerId) {
-        List<Order> orders = orderService.getOrdersByCustomerId(customerId);
+	@GetMapping("/order/{userId}")
+    public ResponseEntity<?> getOrdersByCustomerId(@PathVariable int userId) {
+        List<Order> orders = orderService.getOrdersByCustomerId(userId);
         return ResponseEntity.ok(orders);
     }
 

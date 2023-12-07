@@ -15,9 +15,10 @@ import lombok.ToString;
 @ToString
 public class SingleOrder {
 	
+	@NotBlank(message="please enter user id")
+	private int userId;
 	
-	private int customerId;
-	
+	@NotBlank(message="please enter product id")
 	private int product_id;
 	
 	@NotBlank(message="please enter quantity")

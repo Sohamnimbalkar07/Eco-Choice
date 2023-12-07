@@ -4,15 +4,15 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 
-import com.app.pojos.Cart_Items;
-import com.app.pojos.OrderItem;
-import com.app.pojos.Product;
+import com.app.entities.Cart_Items;
+import com.app.entities.OrderItem;
+import com.app.entities.Product;
 
 
 public interface ICustomerService {
 
-	void addToCart(int customerID, int productID, int quantity);
-	List<Cart_Items> getCartItems(int customer_id);
+	void addToCart(long userID, int productID, int quantity);
+	List<Cart_Items> getCartItems(long user_id);
 	void removeCart(int cartItemId);
 	List<Product> getProductByName(String productname);
 	List<Product> getAllProduct();

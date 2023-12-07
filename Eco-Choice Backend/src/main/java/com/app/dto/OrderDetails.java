@@ -13,7 +13,7 @@ import lombok.ToString;
 @ToString
 public class OrderDetails {
 
-	private int customerid;
+	private long userid;
 	
 	private String address;
 	

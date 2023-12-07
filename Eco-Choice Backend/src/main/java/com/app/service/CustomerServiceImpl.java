@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.app.dao.Cart_ItemsRepository;
-import com.app.dao.ProductRepository;
-import com.app.pojos.Cart_Items;
-import com.app.pojos.Product;
+import com.app.repository.Cart_ItemsRepository;
+import com.app.repository.ProductRepository;
+import com.app.entities.Cart_Items;
+import com.app.entities.Product;
 
 
 @Service
@@ -21,17 +21,17 @@ public class CustomerServiceImpl implements ICustomerService {
 	ProductRepository productRepo;
 
 	@Override
-	public void addToCart(int customerId, int productId, int quantity) {
+	public void addToCart(long userId, int productId, int quantity) {
 		
-		cart_itemsRepo.addToCart(customerId,productId,quantity);
+		cart_itemsRepo.addToCart(userId,productId,quantity);
 		
 		
 	}
 
 	@Override
-	public List<Cart_Items> getCartItems(int customer_id) {
+	public List<Cart_Items> getCartItems(long user_id) {
 		
-		return cart_itemsRepo.findAllByCartCustomerId(customer_id);
+		return cart_itemsRepo.findAllByCartUserUserId(user_id);
 	}
 
 	@Override

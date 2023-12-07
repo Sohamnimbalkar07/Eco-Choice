@@ -16,7 +16,7 @@ import lombok.ToString;
 public class CartDTO {
 	
 	@NotBlank
-	private int customer_id;
+	private long user_id;
 	
 	@NotBlank
 	private int product_id;

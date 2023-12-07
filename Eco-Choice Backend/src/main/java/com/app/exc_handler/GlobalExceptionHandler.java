@@ -15,9 +15,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.app.dto.ErrorResponse;
 
-//@ControllerAdvice // MANDATORY annotation to tell SC , following is the global exc handler class
+@ControllerAdvice // MANDATORY annotation to tell SC , following is the global exc handler class
 					// to intercept exceptions in all controllers n rest controllers
-//@ControllerAdvice     //ResponseEntityExceptionHandler => a base class , for handling methdo arg not valid type of excs
+//ResponseEntityExceptionHandler => a base class , for handling methdo arg not valid type of excs
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@Override
@@ -37,10 +37,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	
 
 	@ExceptionHandler(Exception.class)
-	public ResponseEntity<?> handleAnyException(Exception e,WebRequest request) {
+	public ResponseEntity<?> handleException(Exception e) {
 		System.out.println("in run time exc handler");
-		ErrorResponse errResp = new ErrorResponse(e.getMessage(),request.getDescription(false));
-		return new ResponseEntity<>(errResp,HttpStatus.INTERNAL_SERVER_ERROR);
+		e.printStackTrace();
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse(e.getMessage()));
 	}
 }
-
