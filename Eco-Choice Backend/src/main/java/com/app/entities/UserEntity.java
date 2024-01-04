@@ -40,10 +40,10 @@ public class UserEntity {
 	@Column(length = 20)
 	private String userName;
 	
-	@Column(length = 20, unique = true)
+	@Column(length = 50, unique = true)
 	private String email;
 	
-	@Column(length = 350)
+	@Column(length = 500)
 	private String password;
 	
 	@OneToMany(mappedBy= "user")

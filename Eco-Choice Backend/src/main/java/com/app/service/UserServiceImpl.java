@@ -58,4 +58,25 @@ public class UserServiceImpl implements IUserService {
 		return user.getUserId();
 	}
 
+	@Override
+	public UserEntity findByEmail(String email) {
+		
+		Optional<UserEntity> user = userRepo.findByEmail(email);
+		return user.orElse(null);
+	}
+	
+	@Override
+	public void resetPassword(String email, String newPassword) {
+        UserEntity user = findByEmail(email);
+
+        if (user != null) {
+            
+            String encodedPassword = encoder.encode(newPassword);
+            user.setPassword(encodedPassword);
+            userRepo.save(user);
+        } else {
+            throw new IllegalArgumentException("User with email " + email + " not found");
+        }
+    }
+
 }

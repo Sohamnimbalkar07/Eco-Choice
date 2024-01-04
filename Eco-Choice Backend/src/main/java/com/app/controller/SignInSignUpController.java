@@ -63,6 +63,7 @@ public class SignInSignUpController {
 	@PostMapping("/signup")
 	public ResponseEntity<?> userRegistration(@RequestBody @Valid UserDTO user)
 	{
+		
 		System.out.println("in reg user : user "+user+" roles "+user.getRoles());//{....."roles" : [ROLE_USER,...]}
 		//invoke service layer method , for saving : user info + associated roles info
 		return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerUser(user));		
