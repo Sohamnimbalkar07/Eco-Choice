@@ -1,6 +1,6 @@
 # Eco-Choice
 Technology Stack: SpringBoot RestAPI, ReactJS, MySQL
-1. The developed innovative agricultural e-commerce platform empowers farmers to showcase and sell 
+* The developed innovative agricultural e-commerce platform empowers farmers to showcase and sell 
 their organic products directly to consumers, who can easily purchase these items.
 2. Increasing farmers’ profits by enabling direct sales of organic products to consumes and cutting out 
 intermediaries.
