@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/api/auth")
 @Slf4j
+@CrossOrigin
 public class SignInSignUpController {
 //dep : JWT utils : for generating JWT
 	@Autowired
@@ -51,7 +53,9 @@ public class SignInSignUpController {
 			// authenticate the credentials
 			Authentication authenticatedDetails = manager.authenticate(authToken);
 			// => auth succcess
-			return ResponseEntity.ok(new AuthResp("Auth successful!", utils.generateJwtToken(authenticatedDetails),userService.getUserId(request.getEmail())));
+			return ResponseEntity.ok(new AuthResp("Auth successful!", utils.generateJwtToken(authenticatedDetails),
+					            userService.findByEmail(request.getEmail()).getUserId(),
+			                    userService.findByEmail(request.getEmail()).getUserRoles()));
 		} catch (BadCredentialsException e) { // lab work : replace this by a method in global exc handler
 			// send back err resp code
 			System.out.println("err "+e);
