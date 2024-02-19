@@ -36,7 +36,9 @@ public class ForgotPasswordController {
     
     @PostMapping
     public ResponseEntity<String> forgotPassword(@RequestParam String email) {
-        UserEntity user = userService.findByEmail(email);
+        
+    	System.out.println("in forgot password");
+    	UserEntity user = userService.findByEmail(email);
         if (user != null) {
  
             String otp = otpService.generateOtp();

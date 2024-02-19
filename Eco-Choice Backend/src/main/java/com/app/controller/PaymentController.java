@@ -35,7 +35,7 @@ public class PaymentController {
 	@PostMapping
 	public ResponseEntity<?> createpaymentorder(@RequestBody PaymentDTO paymentdto)
 	{
-		
+		System.out.println(paymentdto);
 		try {
 			return new ResponseEntity<>(paymentService.createpaymentorder(paymentdto),HttpStatus.OK);
 		} catch (RazorpayException e) {

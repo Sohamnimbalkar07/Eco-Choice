@@ -1,10 +1,15 @@
 import React from 'react'
 import { useState,useEffect } from 'react';
 import "../PlaceOrder.css";
+import { Navigate, useNavigate } from 'react-router-dom';
+
 export default function PlaceOrder() {
     const [shippingAddress, setShippingAddress] = useState('');
-  const orderData = JSON.parse(localStorage.getItem('orderData'));
-  
+    const orderData = JSON.parse(localStorage.getItem('orderData'));
+    const jwtToken = sessionStorage.getItem('jwtToken');
+    const navigate = useNavigate();
+
+
   useEffect(() => {
     // If you want to initialize shipping address with a value from local storage
     if (orderData && orderData.shippingAddress) {
@@ -12,7 +17,7 @@ export default function PlaceOrder() {
     }
   }, [orderData]);
 
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = async () => {
     if (!orderData) {
       console.error('Order data not found in local storage.');
       return;
@@ -31,16 +36,26 @@ export default function PlaceOrder() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        "Authorization": `Bearer ${jwtToken}`
       },
       body: JSON.stringify(orderData),
     })
-      .then((response) => {
+      .then(async (response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         alert('Order placed successfully');
-
+        try{
+        const orderId = await response.json();
+        localStorage.setItem('orderId', orderId);
+        }
+        catch(error)
+        {
+             console.log("error");
+        }
+        
         localStorage.removeItem('orderData');
+        navigate('/payment');
       })
       .catch((error) => {
         console.error('Error placing order:', error);

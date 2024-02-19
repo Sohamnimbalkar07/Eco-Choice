@@ -2,24 +2,26 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function PlaceOrderFromCart() {
-  const customerid = sessionStorage.getItem('authenticatedUser');
+  const userId = sessionStorage.getItem('userId');
   const total = parseFloat(localStorage.getItem('totalPrice'));
-
+  const jwtToken = sessionStorage.getItem('jwtToken');
+  console.log(userId);
   const [address, setAddress] = useState('');
   const navigate = useNavigate();
 
-  const submitOrder = () => {
+  const submitOrder = async () => {
     const orderData = {
-      customerid: customerid,
+      userid: userId,
       address: address,
       total: total,
     };
-
+    console.log(userId , "user id is " );
     // Send the data to the backend
     fetch("http://localhost:9090/customer/orderfromcart", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        "Authorization": `Bearer ${jwtToken}`
       },
       body: JSON.stringify(orderData),
     })
@@ -29,16 +31,17 @@ export default function PlaceOrderFromCart() {
       })
       .then(response => {
         console.log('JSON Response:', response);
-
+        localStorage.setItem('orderId',response);
+        console.log(response);
         if (response.success) {
           console.log('Order submitted successfully');
-    
           localStorage.removeItem('totalPrice');
          
         } else {
           console.error('Failed to submit order');
           // Handle failure if needed
-          navigate('/orderdetails');
+          navigate('/payment');
+
         }
       })
       .catch(error => {

@@ -20,7 +20,10 @@ import PlaceOrder from './components/PlaceOrder';
 import PlaceOrderFromCart from './components/PlaceOrderFromCart';
 import HomePage from './components/HomePage';
 import OrderDetails from './components/OrderDetails';
-
+import Payment from './components/Payment';
+import forgotPassword from './components/ForgotPassword';
+import EnterOtp from './components/EnterOtp';
+import ResetPassword from './components/ResetPassword';
 function App() {
   return (
     <>
@@ -47,6 +50,12 @@ function App() {
       <Route path='/PlaceOrder'Component={PlaceOrder}></Route>
       <Route path='placeorderfromcart'Component={PlaceOrderFromCart}></Route>
       <Route path='/orderdetails'Component={OrderDetails}></Route>
+      <Route path='/payment'Component={Payment}></Route>
+      <Route path='/forgotpassword'Component={forgotPassword}></Route>
+      <Route path='/enterotp'Component={EnterOtp}></Route>
+      <Route path='/resetpassword'Component={ResetPassword}></Route>
+
+
       </Routes>
      </div>
     </>

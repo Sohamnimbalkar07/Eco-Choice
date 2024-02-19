@@ -1,5 +1,5 @@
 import  axios  from "axios";
-const BASE_API_URL="http://localhost:9090/signin" ;
+const BASE_API_URL="http://localhost:9090/api/auth/signin" ;
 class LoginService{
    
     authenticateUser(user)
@@ -8,4 +8,4 @@ class LoginService{
     }
 
 }
-export default new LoginService() ;
+export default new LoginService();

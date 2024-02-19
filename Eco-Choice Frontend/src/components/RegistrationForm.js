@@ -8,23 +8,46 @@ function RegistrationForm() {
   const [passwordMismatch, setPasswordMismatch] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
-    first_name: '',
-    last_name: '',
+    first_Name: '',
+    last_Name: '',
     password: '',
     confirm_password: '', // Add confirm_password field
-    username: '',
-    address: '',
+    userName: '',
     mobileNo: '',
-    role: '',
+    roles: [],
   });
+
+  // const handleInputChange = (event) => {
+  //   const { name, value } = event.target;
+  //   if(name == role)
+  //   {
+  //     setFormData({
+  //       ...formData,
+  //       roles[value],
+  //     })
+  //   }
+  //   else {setFormData({
+  //     ...formData,
+  //     [name]: value,
+  //   }); }
+  // };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    
+    if (name === 'role') {
+      setFormData({
+        ...formData,
+        roles: [value], // Assuming 'value' is the role you want to set
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,19 +56,22 @@ function RegistrationForm() {
       setPasswordMismatch(true);
       return;
     }
+    console.log(formData);
 
-    RegistrationService.addUserDetails(formData)
+    const register = { ...formData };
+    delete register.confirm_password;
+    console.log(register);
+    RegistrationService.addUserDetails(register)
       .then((res) => {
         setFormData({
           email: '',
-          first_name: '',
-          last_name: '',
+          first_Name: '',
+          last_Name: '',
           password: '',
           confirm_password: '', // Clear confirm password
-          username: '',
-          address: '',
+          userName: '',
           mobileNo: '',
-          role: '',
+          roles: [],
         });
         setPasswordMismatch(false); // Reset password mismatch status
         navigate('/Login');
@@ -75,9 +101,9 @@ function RegistrationForm() {
          <input
             type="text"
             id="firstName"
-            name="first_name"
+            name="first_Name"
             placeholder='First name...'
-            value={formData.firstName}
+            value={formData.first_Name}
             onChange={handleInputChange}
             required
           />
@@ -86,9 +112,9 @@ function RegistrationForm() {
           <input
             type="text"
             id="lastName"
-            name="last_name"
+            name="last_Name"
             placeholder='Last name...'
-            value={formData.lastName}
+            value={formData.last_Name}
             onChange={handleInputChange}
             required
           />
@@ -97,9 +123,9 @@ function RegistrationForm() {
         <input
             type="text"
             id="username"
-            name="username"
-            placeholder='Username...'
-            value={formData.username}
+            name="userName"
+            placeholder='UserName...'
+            value={formData.userName}
             onChange={handleInputChange}
             required
           />
@@ -141,7 +167,7 @@ function RegistrationForm() {
           />
         </div>
         <div>
-        <input
+        {/* <input
             type="text"
             id="Address"
             placeholder='Address...'
@@ -149,7 +175,7 @@ function RegistrationForm() {
             value={formData.address}
             onChange={handleInputChange}
             required
-          />
+          /> */}
         </div>
         <div className='role'>
      
@@ -161,8 +187,8 @@ function RegistrationForm() {
             required
           >
             <option>Select a role</option>
-            <option value="customer" onSelect={handleInputChange}>Customer</option>
-            <option value="farmer"onSelect={handleInputChange}>Farmer</option>
+            <option value="ROLE_CUSTOMER" onSelect={handleInputChange}>Customer</option>
+            <option value="ROLE_FARMER"onSelect={handleInputChange}>Farmer</option>
           </select>
         </div>
         <br></br>

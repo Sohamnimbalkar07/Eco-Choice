@@ -40,7 +40,7 @@ public class OrderServiceImpl implements IOrderService {
 	    private ProductRepository productRepo;
 
 		@Override
-	    public void placeSingleProductOrder(SingleOrder order) {
+	    public int placeSingleProductOrder(SingleOrder order) {
 	        
 	        UserEntity user = userRepo.findByUserId(order.getUserId())
 	        .orElseThrow(() -> new RuntimeException("User not found with ID"));
@@ -63,12 +63,12 @@ public class OrderServiceImpl implements IOrderService {
 	        
 	        order1.setOrderItems(Collections.singletonList(orderItem));
 	        Order savedOrder = orderRepo.save(order1);
-	        orderItemRepo.save(orderItem);
-
+	        OrderItem placedOrder = orderItemRepo.save(orderItem);
+            return savedOrder.getOrderId();
 	    }
 
 		@Override
-		public String placeOrderFromCart(long userId, String shippingAddress,int total) {
+		public int placeOrderFromCart(long userId, String shippingAddress,int total) {
 			
 			UserEntity user = userRepo.findByUserId(userId)
 			        .orElseThrow(() -> new RuntimeException("User not found with ID"));
@@ -108,7 +108,7 @@ public class OrderServiceImpl implements IOrderService {
 	        
 	       cart_ItemsRepo.deleteByCartUserUserId(userId);
 
-			return "1";
+			return savedOrder.getOrderId();
 		}
 		
 		public List<Order> getOrdersByCustomerId(long customerId) 

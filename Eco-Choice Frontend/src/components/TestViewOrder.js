@@ -2,11 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../TestViewOrder.css"
 export default function TestViewOrder() {
-  const customer_id = sessionStorage.getItem('authenticatedUser');
+  const userId = sessionStorage.getItem('userId');
+  const jwtToken = sessionStorage.getItem('jwtToken');
   const [data, setData] = useState([]);
   const navigate=useNavigate();
   useEffect(() => {
-    fetch(`http://localhost:9090/customer/${customer_id}`)
+    fetch(`http://localhost:9090/customer/${userId}`,
+    {
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${jwtToken}`
+      }
+    })
       .then(resp => resp.json())
       .then(obj => {
         if (obj) {
@@ -16,7 +24,7 @@ export default function TestViewOrder() {
       .catch(error => {
         console.error("Error fetching data:", error);
       });
-  }, [customer_id]);
+  }, [userId]);
    
   const updateQuantity = (index, newQuantity, cartItemId) => {
     const updatedData = [...data];
@@ -44,6 +52,7 @@ export default function TestViewOrder() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        "Authorization": `Bearer ${jwtToken}`
       },
       body: JSON.stringify(updatedCartItem),
     })
@@ -70,6 +79,10 @@ export default function TestViewOrder() {
     // Send request to backend to remove item based on cartItemId
     fetch(`http://localhost:9090/customer/${cartItemId}`, {
       method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${jwtToken}`
+      }
     })
       .then(resp => resp.json())
       .then(response => {

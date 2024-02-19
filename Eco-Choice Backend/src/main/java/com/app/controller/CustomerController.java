@@ -106,7 +106,7 @@ public class CustomerController {
 	{
 		System.out.println("in order ");
 		orderService.placeSingleProductOrder(order);
-		return new ResponseEntity<>(new ResponseDTO("Order Placed Successfully"),HttpStatus.CREATED);
+		return new ResponseEntity<>(orderService.placeSingleProductOrder(order),HttpStatus.CREATED);
 	}
 	
 	@PostMapping("/orderfromcart")

@@ -3,13 +3,23 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import '../CustomerWelcome.css' ;
 
 function CustomerWelcome() {
- const customerId= sessionStorage.getItem('authenticatedUser'); 
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
   const[selectedOption,setSelectedOption]=useState('');
+  const customerId = sessionStorage.getItem('userId');
+  const jwtToken = sessionStorage.getItem('jwtToken');
   useEffect(() => {
     // Make a network request to fetch products from the API
-    fetch('http://localhost:9090/customer/products') // Replace with your API endpoint
+    fetch('http://localhost:9090/customer/products',
+    {
+      method : "get",
+      headers :
+      {
+        "content-type" : "application/json",
+        "Authorization": `Bearer ${jwtToken}`
+      }
+    }
+      ) // Replace with your API endpoint
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

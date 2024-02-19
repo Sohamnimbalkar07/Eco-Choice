@@ -18,25 +18,104 @@ export default function Login() {
     setUser((prevUser) => ({ ...prevUser, [name]: value }));
   };
 
+  // const submitUser = (e) => {
+  //   e.preventDefault();
+  //   LoginService.authenticateUser({email : user.email, password : user.password}).then((res) => {
+  //     if (res.data != null) {
+  //       console.log(res.data.role);
+
+  //       if (user.role === "Admin") {
+  //         AuthenticateService.adminLogin(res.data.id);
+  //         navigate('/Admin');
+  //       } else if (user.role === "Customer") {
+  //         AuthenticateService.customerLogin(res.data.id);
+  //         navigate('/viewProduct');
+  //       } else if (user.role === "Farmer") {
+  //         AuthenticateService.farmerLogin(res.data.id);
+  //         navigate('/FarmerWelcome');
+  //       } else {
+  //         alert("Invalid role selected");
+  //       }
+
+  //       setUser({
+  //         email: "",
+  //         password: "",
+  //         role: ""
+  //       });
+  //     } else {
+  //       alert("Invalid username or password");
+  //       setUser({
+  //         email: "",
+  //         password: "",
+  //         role: ""
+  //       });
+  //     }
+  //   });
+  // };
+
+  // const submitUser = (e) => {
+  //   e.preventDefault();
+  //   LoginService.authenticateUser({email : user.email, password : user.password}).then((res) => {
+  //     if (res.data != null) {
+  //       const selectedRole = user.role; // Role selected on the frontend
+  //       const userRoles = res.data.userRoles.map((role) => role.roleName);
+  
+  //       if (userRoles.includes(selectedRole)) {
+  //         // Role match, proceed to navigate
+  //         if (selectedRole === "ROLE_ADMIN") {
+  //           AuthenticateService.adminLogin(res.data.userId);
+  //           navigate('/Admin');
+  //         } else if (selectedRole === "ROLE_CUSTOMER") {
+  //           AuthenticateService.customerLogin(res.data.userId);
+  //           navigate('/viewProduct');
+  //         } else if (selectedRole === "ROLE_FARMER") {
+  //           AuthenticateService.farmerLogin(res.data.userId);
+  //           navigate('/FarmerWelcome');
+  //         }
+  //       } else {
+  //         alert("Invalid role selected");
+  //       }
+  
+  //       setUser({
+  //         email: "",
+  //         password: "",
+  //         role: ""
+  //       });
+  //     } else {
+  //       alert("Invalid username or password");
+  //       setUser({
+  //         email: "",
+  //         password: "",
+  //         role: ""
+  //       });
+  //     }
+  //   });
+  // };
+
   const submitUser = (e) => {
     e.preventDefault();
-    LoginService.authenticateUser(user).then((res) => {
+    LoginService.authenticateUser({ email: user.email, password: user.password }).then((res) => {
       if (res.data != null) {
-        console.log(res.data.role);
-
-        if (user.role === "Admin") {
-          AuthenticateService.adminLogin(res.data.id);
-          navigate('/Admin');
-        } else if (user.role === "Customer") {
-          AuthenticateService.customerLogin(res.data.id);
-          navigate('/viewProduct');
-        } else if (user.role === "Farmer") {
-          AuthenticateService.farmerLogin(res.data.id);
-          navigate('/FarmerWelcome');
+        const selectedRole = user.role; 
+        const userId = res.data.userId;
+        const jwtToken = res.data.jwt;
+        sessionStorage.setItem('userId', userId);
+        sessionStorage.setItem('jwtToken',jwtToken);
+        const userRoles = res.data.userRoles.map((role) => role.roleName);
+        if (userRoles.includes(selectedRole)) {
+          if (selectedRole === "ROLE_FARMER") {
+            AuthenticateService.farmerLogin(res.data);
+            navigate('/FarmerWelcome');
+          } else if (selectedRole === "ROLE_CUSTOMER") {
+            AuthenticateService.customerLogin(res.data);
+            navigate('/viewProduct');
+          } else {
+            alert("Invalid role selected");
+          }
         } else {
           alert("Invalid role selected");
         }
-
+  
         setUser({
           email: "",
           password: "",
@@ -52,6 +131,8 @@ export default function Login() {
       }
     });
   };
+  
+  
 
   return (
     <>
@@ -79,17 +160,18 @@ export default function Login() {
               required
             />
             <br />
-            <input type="radio" id="farmer" name="role" value="Farmer" checked={user.role === 'Farmer'} onChange={(e) => { handlechange(e); }} />
+            <input type="radio" id="farmer" name="role" value="ROLE_FARMER" checked={user.role === 'ROLE_FARMER'} onChange={(e) => { handlechange(e); }} />
             <label htmlFor="farmer" id="farmer" className='far'>Farmer</label>
-            <input type="radio" id="customer" name="role" value="Customer" checked={user.role === 'Customer'} onChange={(e) => { handlechange(e); }} />
+            <input type="radio" id="customer" name="role" value="ROLE_CUSTOMER" checked={user.role === 'ROLE_CUSTOMER'} onChange={(e) => { handlechange(e); }} />
             <label htmlFor="customer" id="customer">Customer</label>
-            <input type="radio" id="admin" name="role" value="Admin" checked={user.role === 'Admin'} onChange={(e) => { handlechange(e); }} />
+            <input type="radio" id="admin" name="role" value="ROLE_ADMIN" checked={user.role === 'ROLE_ADMIN'} onChange={(e) => { handlechange(e); }} />
             <label htmlFor="admin" id="admin">Admin</label>
             <br />
             <button className="btn">Login</button>
           </div>
           <div className="container2">
             <p>Not a member? <a href="/RegistrationForm" className="link">Create Account</a></p>
+            <p>Forgot Password? <a href="/forgotpassword" className="link">forgot password</a></p>
           </div>
         </div>
       </form>

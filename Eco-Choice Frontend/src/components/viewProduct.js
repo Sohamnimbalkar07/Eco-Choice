@@ -5,12 +5,21 @@ import { Link } from 'react-router-dom';
 
 export default function ViewProduct() {
   const [data, setData] = useState([]);
-  const customerId = sessionStorage.getItem('authenticatedUser');
+  const userId = sessionStorage.getItem('userId');
+  const jwtToken = sessionStorage.getItem('jwtToken');
+  console.log("jwt token", jwtToken);
   const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState('');
-
   useEffect(() => {
-    fetch("http://localhost:9090/customer/products")
+    fetch("http://localhost:9090/customer/products",
+    {
+      method : "get",
+      headers :
+      {
+        "content-type" : "application/json",
+        "Authorization": `Bearer ${jwtToken}`
+      }
+    })
       .then(res => res.json())
       .then(data => setData(data));
   }, []);
@@ -20,19 +29,19 @@ export default function ViewProduct() {
   };
 
   const handleAddToCart = (productId) => {
-    const customer_id = customerId;
+    const user_id = userId;
+    console.log(selectedOption);
     const cartItem = {
-      customer_id: parseInt(customer_id),
+      user_id: parseInt(user_id),
       product_id: productId,
       quantity: selectedOption,
     };
    
-    
-
     fetch('http://localhost:9090/customer', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        "Authorization": `Bearer ${jwtToken}`
       },
       body: JSON.stringify(cartItem),
     })
@@ -50,8 +59,9 @@ export default function ViewProduct() {
    
   const handlePlaceOrder=(productId,price_per_unit)=>{
      const Total=parseInt(selectedOption) * price_per_unit ;
+     localStorage.setItem('amount',Total);
     const orderData = {
-      customerId: customerId,
+      userId: userId,
       product_id: productId,
       quantity: selectedOption,
       total:Total

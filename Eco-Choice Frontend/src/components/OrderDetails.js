@@ -2,12 +2,20 @@ import React, { useState, useEffect } from 'react';
 
 function OrderDetails() {
   const [orderData, setOrderData] = useState([]);
-  const customerId = sessionStorage.getItem('authenticatedUser');
+  const userId= sessionStorage.getItem('userId');
+  const jwtToken = sessionStorage.getItem('jwtToken');
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch(`http://localhost:9090/customer/order/${customerId}`);
+        const response = await fetch(`http://localhost:9090/customer/order/${userId}`,
+        {
+          method: 'get',
+          headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${jwtToken}`
+          },
+        });
         const data = await response.json();
         setOrderData(data);
       } catch (error) {
@@ -16,7 +24,7 @@ function OrderDetails() {
     }
 
     fetchData();
-  }, [customerId]);
+  }, [userId]);
 
   return (
     <center>
