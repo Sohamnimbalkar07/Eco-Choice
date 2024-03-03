@@ -114,7 +114,6 @@ public class FarmerController {
 			}
 	}
     
-	//add REST API to update existing user details
 	@PutMapping
 	public ResponseEntity<?> updateProductDetails(@RequestBody ProductDTO productdto)
 	{

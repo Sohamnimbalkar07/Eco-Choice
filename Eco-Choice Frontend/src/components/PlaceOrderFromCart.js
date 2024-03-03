@@ -16,7 +16,7 @@ export default function PlaceOrderFromCart() {
       total: total,
     };
     console.log(userId , "user id is " );
-    // Send the data to the backend
+    
     fetch("http://localhost:9090/customer/orderfromcart", {
       method: 'POST',
       headers: {
@@ -39,14 +39,14 @@ export default function PlaceOrderFromCart() {
          
         } else {
           console.error('Failed to submit order');
-          // Handle failure if needed
+        
           navigate('/payment');
 
         }
       })
       .catch(error => {
         console.error('Error submitting order:', error);
-        // Handle error if needed
+      
       });
   };
 
@@ -67,7 +67,7 @@ export default function PlaceOrderFromCart() {
       <button
   onClick={submitOrder}
   className="btn btn-info"
-  style={{ width: '150px' }} // Adjust the height value as needed
+  style={{ width: '150px' }} 
 >
   Place Order
 </button>

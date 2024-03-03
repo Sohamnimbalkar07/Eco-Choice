@@ -1,6 +1,4 @@
 import { BrowserRouter as Router,Routes,Route } from 'react-router-dom';
-// import './App.css';
-
 import Login from './components/Login';
 import RegistrationForm from './components/RegistrationForm';
 import NavBar from './components/NavBar';
@@ -12,9 +10,7 @@ import FarmerviewProduct from './components/FarmerviewProduct';
 import About from './components/About';
 import Customer from './components/Customer';
 import AdminWelcome from './components/AdminWelcome';
-// import CustomerWelcome from './components/CustomerWelcome';
 import ViewProduct from './components/viewProduct';
-//import ViewOrder from './components/ViewCartPr';
 import TestViewOrder from './components/TestViewOrder';
 import PlaceOrder from './components/PlaceOrder';
 import PlaceOrderFromCart from './components/PlaceOrderFromCart';
@@ -32,7 +28,7 @@ function App() {
     <NavBar/>
      
       <Routes>
-      <Route path='/HomePage' Component={HomePage}></Route>
+      <Route path='/HomePage' exact Component={HomePage}></Route>
       <Route path='/About' Component={About}></Route>
       <Route path='/Login' Component={Login}></Route>
       <Route path='/RegistrationForm' Component={RegistrationForm}></Route>

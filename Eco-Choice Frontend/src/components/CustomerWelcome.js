@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 import '../CustomerWelcome.css' ;
 
 function CustomerWelcome() {
@@ -9,7 +9,7 @@ function CustomerWelcome() {
   const customerId = sessionStorage.getItem('userId');
   const jwtToken = sessionStorage.getItem('jwtToken');
   useEffect(() => {
-    // Make a network request to fetch products from the API
+  
     fetch('http://localhost:9090/customer/products',
     {
       method : "get",
@@ -19,7 +19,7 @@ function CustomerWelcome() {
         "Authorization": `Bearer ${jwtToken}`
       }
     }
-      ) // Replace with your API endpoint
+      ) 
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -28,11 +28,11 @@ function CustomerWelcome() {
       })
       .then((data) => {
         setProducts(data);
-        setError(null); // Clear any previous errors
+        setError(null); 
       })
       .catch((error) => {
         console.error('Error fetching products:', error);
-        setError(error.message); // Set the error message in state
+        setError(error.message); 
       });
   }, []);
     
@@ -41,7 +41,7 @@ function CustomerWelcome() {
    }
      
   const handleAddToCart = (productId) => {
-    const customer_id =customerId  // Fetch customer_id from session storage
+    const customer_id =customerId  
     const cartItem = {
       customer_id: parseInt(customer_id),
       product_id: productId,
@@ -63,7 +63,7 @@ function CustomerWelcome() {
       })
       .catch((error) => {
         console.error('Error adding to cart:', error);
-        // Handle error here, e.g., show an error message
+        
       });
   };
 

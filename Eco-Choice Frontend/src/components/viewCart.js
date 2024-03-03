@@ -25,7 +25,7 @@ const tp= calculateTotalPrice();
 useEffect(() => {
     fetch(`http://localhost:9090/customer/${customer_id}`).then(resp => resp.json()).then((obj) => {
         if (obj) {
-            setData(obj); // Fix: Set the fetched data to the state
+            setData(obj); 
             console.log("in use effect"+data)
             console.log("in use effect of obj"+obj)
         }

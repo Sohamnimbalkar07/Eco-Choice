@@ -40,7 +40,7 @@ function FarmerWelcome() {
         throw new Error("Network response was not ok");
       }
 
-      // Update the product list by filtering out the deleted product
+
       setProdArr(prodArr.filter((product) => product.id !== productId));
     } catch (error) {
       console.log(error);

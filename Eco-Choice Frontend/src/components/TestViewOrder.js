@@ -41,13 +41,12 @@ export default function TestViewOrder() {
     setData(updatedData);
 
     
-    // Prepare the updated cart item data to send to the backend
     const updatedCartItem = {
       cartItemId: cartItemId,
       quantity: newQuantity,
     };
 
-    // Send the updated cart item data to the backend
+
     fetch("http://localhost:9090/customer/update", {
       method: 'POST',
       headers: {
@@ -62,21 +61,21 @@ export default function TestViewOrder() {
           console.log('Quantity updated on the backend');
         } else {
           console.error('Failed to update quantity on the backend');
-          // Revert the local state back to the original quantity
+        
           updatedData[index].quantity = data[index].quantity;
           setData(updatedData);
         }
       })
       .catch(error => {
         console.error('Error updating quantity on the backend:', error);
-        // Revert the local state back to the original quantity
+      
         updatedData[index].quantity = data[index].quantity;
         setData(updatedData);
       });
   };       
 
   const removeItem = (index, cartItemId) => {
-    // Send request to backend to remove item based on cartItemId
+  
     fetch(`http://localhost:9090/customer/${cartItemId}`, {
       method: 'DELETE',
       headers: {
@@ -135,7 +134,7 @@ export default function TestViewOrder() {
               <button
   className='btn btn-danger'
   onClick={() => removeItem(index, v.cart_Items_id)}
-  style={{ width: '150px' }} // Adjust the width value as needed
+  style={{ width: '150px' }}
 >
   Remove Item
 </button>
@@ -155,7 +154,7 @@ export default function TestViewOrder() {
       </table>
         <div className="text-center mt-3">
         <button
-          onClick={() => navigate('/placeorderfromcart')} // Redirect to PlaceOrderFromCart component
+          onClick={() => navigate('/placeorderfromcart')} 
           className="btn btn-info "  >
           Place Order
         </button>

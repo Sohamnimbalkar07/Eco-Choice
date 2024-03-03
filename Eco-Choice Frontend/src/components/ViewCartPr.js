@@ -12,7 +12,7 @@ useEffect(() => {
       .then(resp => resp.json())
       .then((obj) => {
         if (obj) {
-          setData(obj); // Set the fetched data to the state
+          setData(obj); 
         }
       })
       .catch(error => {
@@ -23,7 +23,7 @@ useEffect(() => {
   const calculateTotalPrice = () => {
     let total = 0;
     data.forEach(v => {
-     // x=v.product.price_per_unit
+     
       total += v.product.price_per_unit * v.quantity;
     });
     return total;

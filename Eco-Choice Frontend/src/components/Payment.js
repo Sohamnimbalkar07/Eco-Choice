@@ -50,12 +50,12 @@ const Payment = () => {
         if (window.Razorpay) {
           const rzp = new window.Razorpay(options);
           rzp.open().then((data) => {
-            // handle success
+  
             console.data("payment Successfull");
             alert(`Success: ${data.razorpay_payment_id}`);
             
           }).catch((error) => {
-            // handle failure
+
             alert(`Error: ${error.code} | ${error.description}`);
           });
         } else {
@@ -72,7 +72,6 @@ const Payment = () => {
   return (
     <div>
       <h1>Payment</h1>
-      {/* Additional payment-related UI or messages can be added here */}
     </div>
   );
 };

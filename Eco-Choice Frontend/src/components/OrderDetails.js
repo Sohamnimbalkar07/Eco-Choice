@@ -33,7 +33,7 @@ function OrderDetails() {
         {orderData.map((order, index) => (
           <div key={index} className="card mb-4 order-card">
             <div >
-              {/* <h2 className="card-title">Order ID: {order.orderId}</h2> */}
+
               <table className="table table-stripped">
                 <thead>
                   <tr>
