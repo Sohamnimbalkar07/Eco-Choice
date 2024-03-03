@@ -1,3 +1,12 @@
 # Eco-Choice
-Many farmers have to rely on intermediaries to sell their products, resulting in reduced profits. The absence of direct sales channels also hinders farmers' ability to establish relationships with customers and market their products effectively. 
-The primary objective of our project is to provide an independent platform for farmers to sell their organic products online. Farmers can add different products they want to sell and view customers order. Customers can view products available from different farmers, add them in a cart and place a purchase order. It provides a seamless experience for customers to purchase authenticated organic products.
+## Innovative Agricultural E-commerce Platform
+
+- The developed platform empowers farmers to showcase and sell their organic products directly to consumers.
+- Increasing farmers’ profits by enabling direct sales of organic products to consumers and cutting out intermediaries.
+
+## System Security
+
+- Increased system security with advanced authentication through Spring Security.
+- Elevated access control using JWT tokens for enhanced protection in the system.
+- Utilized Razorpay API for seamless payment integration, elevating overall system protection and user experience.
+- Implemented SMTP for password recovery, elevating user experience through seamless and secure password retrieval.
